@@ -1,0 +1,33 @@
+@charset "gb2312";
+/* global */
+body,form,div,span,ul,ol,li,p,pre,dl,dt,dd,h1,h2,h3,h4,h5,h6,em,a,fieldset,legend,address,label,textarea,select,input,figure,table,th,td,b,i{ margin:0;padding:0;}
+fieldset,img{border:0;}
+ul,li{list-style:none;}
+em,i{font-style:normal;}
+table{border-collapse:separate;border-spacing:0;}
+a{text-decoration:none; color:#999;}
+a:hover{ text-decoration:underline; color:#3F7E12}
+a:focus,input,button,select,textarea{outline:none;}
+h1,h2,h3,h4,h5,h6{ font-size:100%; font-variant: normal;}
+input,select,img{ vertical-align:middle;}
+legend{ display:none;}
+textarea{resize:none;}
+.clear{ clear:both;}
+.clearfix{zoom:1;}
+.clearfix:after{clear:both; content:"";display:block;height:0;line-height:0;visibility:hidden;}
+body { font:13px Arial, Helvetica, sans-serif; color:#666; line-height:173%;}
+#index,#sub {}
+body { background:#478E13;}
+.green { color:#3F7E12;}
+.copyright { font-family:Arial, Helvetica, sans-serif;}
+.copyright a{ color:#B8D3A2}
+.copyright a:hover{ color:#fff}
+/*logincss*/
+.logincss  { background:#478E13 url(../image/loginbg.jpg) repeat-x ; background-position:top center; color:#666; width:100%;}
+.logincss1  { background:#478E13 url(../image/loginbg2.jpg) repeat-x; background-position:top center; color:#666; width:100%;}
+.loginbox { width:400px; height:254px; position:absolute; right:36px; top:139px;}
+.loginbox li { height:30px; border:1px solid #ccc; width:282px; margin-bottom:20px;}
+.loginbox p { text-align:left; padding-left:0; margin:0 auto}
+.logincss p,.logincss1 p{ color:#B8D3A2; text-align:center;  margin:0 auto; padding-left:0px;}
+.logincss .green,.logincss1 .green  { color:#3F7E12; font-weight:bold }
+.logbox { width:766px; margin:0 auto; height:389px; margin-top:149px; position:relative;}

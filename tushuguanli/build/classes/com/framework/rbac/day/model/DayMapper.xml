@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.rbac.day.dao.DayDao">
+	<resultMap type="com.framework.rbac.day.model.Day"
+		id="dayMap">
+		<id property="id" column="id" javaType="java.lang.Integer"
+			jdbcType="INTEGER" />
+		<result property="adminName" column="admin_name" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="time" column="time" javaType="java.lang.String"
+			jdbcType="DATE" />
+	</resultMap>
+
+<select id="Query" resultMap="dayMap" parameterType="java.util.HashMap">
+	SELECT
+		*
+	FROM
+		day
+	<where>
+		<if test="day.adminName!=null and day.adminName!=''">
+		admin_name=#{day.adminName}
+		</if>
+		<if test="day.time!=null and day.time!=''">
+		AND time=#{day.time}
+		</if>
+	</where>
+	ORDER BY
+		id
+	DESC
+	LIMIT 
+	#{pager.offSet},#{pager.pageSize}
+</select>
+<select id="queryCount" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+		day
+</select>
+
+<insert id="dayAdd">
+
+	INSERT INTO
+		day
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="adminName!=null and adminName!=''">
+			admin_name,
+		</if>
+		<if test="time!=null and time!=''">
+			time,
+		</if>
+	</trim>
+	VALUES
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="adminName!=null and adminName!=''">
+			#{adminName},
+		</if>
+		<if test="time!=null and time!=''">
+			#{time},
+		</if>
+	</trim>
+	
+</insert>
+
+<delete id="informationDelete" parameterType="int">
+		DELETE
+		FROM
+			day
+		WHERE
+			id=#{id}
+</delete>
+
+<update id="informationUpdate" parameterType="com.framework.rbac.day.model.Day">
+		UPDATE
+		day
+		<set>
+			<if test="adminName!=null and adminName!=''">
+			admin_name=#{adminName},
+		</if>
+		<if test="time!=null and time!=''">
+			time=#{time},
+		</if>
+		</set>
+		WHERE id=#{id}
+</update>
+</mapper>

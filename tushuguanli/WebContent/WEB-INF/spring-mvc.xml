@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+<!-- 启动SpringMVC 注解 -->
+	<mvc:annotation-driven />
+	<!-- 扫描,如果有多个包的情况下使用逗号进行分隔 -->
+	<context:component-scan base-package="com.**.web">
+		<!-- 只是扫描Controller注解 -->
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+
+
+
+	<!-- 第三步:排除静态资源 -->
+	<mvc:default-servlet-handler
+		default-servlet-name="default" />
+	<mvc:resources location="/WEB-INF/" mapping="/css/**" />
+	<mvc:resources location="/WEB-INF/" mapping="/image/**" />
+	<mvc:resources location="/WEB-INF/" mapping="/js/**" />
+	<mvc:resources location="/WEB-INF/" mapping="/style/**" />
+	<mvc:resources location="/WEB-INF/" mapping="/upload/**" />
+	<mvc:resources location="/WEB-INF/" mapping="/media/**" />
+
+	<!-- 第四步:建立jsp试图解析器 -->
+	<bean id="jspResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!--第五步:mvc默认控制器 -->
+	<mvc:view-controller path="/sys/index" view-name="jsp/foreground/index" />
+	<mvc:view-controller path="/sys/background/iframemain"
+		view-name="jsp/background/iframemain" />
+	<mvc:view-controller path="/sys/background/login"
+		view-name="jsp/background/login" />
+
+	<!-- 第六步:拦截器 -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/sys/**" />
+			<mvc:exclude-mapping path="/sys/request/**" />
+			<mvc:exclude-mapping path="/sys/login" />
+			<mvc:exclude-mapping path="/sys/background/**" />
+			<mvc:exclude-mapping path="/sys/good/goodAdd" />
+			<mvc:exclude-mapping path="/sys/good/goodUpdate" />
+			<mvc:exclude-mapping path="/sys/good/goodDelete" />
+			<mvc:exclude-mapping path="/sys/loginAdmin"/>
+			<mvc:exclude-mapping path="/sys/logoutAdmin"/>
+			<mvc:exclude-mapping path="/sys/userUpdate"/>
+			<mvc:exclude-mapping path="/sys/userUpdateB"/>
+			<mvc:exclude-mapping path="/sys/**/*B" />
+			<mvc:exclude-mapping path="/sys/queryB" />
+			<mvc:exclude-mapping path="/sys/type/**" />
+			<mvc:exclude-mapping path="/sys/bargain/update" />
+			<mvc:exclude-mapping path="/sys/userAdd" />
+			<bean class="com.framework.base.interceptor.SessionInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+	
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/sys/background/**" />
+			<mvc:exclude-mapping path="/sys/background/login" />
+			<bean class="com.framework.base.interceptor.BackgroundInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+
+	<!-- 多文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="104857600" />
+		<property name="maxInMemorySize" value="4096" />
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+
+	<!-- 第七步:统一的异常处理❌ -->
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
+		<property name="defaultErrorView" value="jsp/background/error"/> <property 
+		name="exceptionAttribute" value="ex"/> <property name="exceptionMappings"> 
+		<props> <prop key="java.lang.RuntimeException">jsp/error</prop> </props> 
+		</property> </bean> -->
+
+
+
+</beans>

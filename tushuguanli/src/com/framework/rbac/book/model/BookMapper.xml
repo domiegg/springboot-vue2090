@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.rbac.book.dao.BookDao">
+	<resultMap type="com.framework.rbac.book.model.Book"
+		id="bookMap">
+		<id property="id" column="id" javaType="java.lang.Integer"
+			jdbcType="INTEGER" />
+		<result property="bookName" column="book_name" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="bookType" column="book_type" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="bookNumber" column="book_number" javaType="java.lang.Integer"
+			jdbcType="INTEGER" />
+		<result property="bookStatus" column="book_status" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="bookWriter" column="book_writer" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="bookHouse" column="book_house" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+<select id="Query" resultMap="bookMap" parameterType="java.util.HashMap">
+	SELECT
+		*
+	FROM
+		book
+	<where>
+		<if test="book.bookName!=null and book.bookName!=''">
+		book_name LIKE CONCAT(CONCAT('%', #{book.bookName}), '%')
+		</if>
+		<if test="book.bookType!=null and book.bookType!=''">
+		AND book_type LIKE CONCAT(CONCAT('%', #{book.bookType}), '%')
+		</if>
+		<if test="book.bookNumber!=null and book.bookNumber!=''">
+		AND book_number LIKE CONCAT(CONCAT('%', #{book.bookNumber}), '%')
+		</if>
+		<if test="book.bookHouse!=null and book.bookHouse!=''">
+		AND book_house LIKE CONCAT(CONCAT('%', #{book.bookHouse}), '%')
+		</if>
+		<if test="book.bookWriter!=null and book.bookWriter!=''">
+		AND book_writer LIKE CONCAT(CONCAT('%', #{book.bookWriter}), '%')
+		</if>
+	</where>
+	LIMIT 
+	#{pager.offSet},#{pager.pageSize}
+</select>
+<select id="QueryOne" resultMap="bookMap">
+	SELECT
+		*
+	FROM
+		book
+	<where>
+		id=#{id}
+	</where>
+</select>
+<select id="queryCount" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+		book
+	<where>
+		<if test="book.bookName!=null and book.bookName!=''">
+		book_name LIKE CONCAT(CONCAT('%', #{book.bookName}), '%')
+		</if>
+		<if test="book.bookType!=null and book.bookType!=''">
+		AND book_type LIKE CONCAT(CONCAT('%', #{book.bookType}), '%')
+		</if>
+		<if test="book.bookNumber!=null and book.bookNumber!=''">
+		AND book_number LIKE CONCAT(CONCAT('%', #{book.bookNumber}), '%')
+		</if>
+		<if test="book.bookStatus!=null and book.bookStatus!=''">
+		AND book_status LIKE CONCAT(CONCAT('%', #{book.bookStatus}), '%')
+		</if>
+	</where>
+</select>
+
+<insert id="bookAdd">
+
+	INSERT INTO
+		book
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="bookName!=null and bookName!=''">
+			book_name,
+		</if>
+		<if test="bookType!=null and bookType!=''">
+			book_type,
+		</if>
+			book_number,
+		<if test="bookStatus!=null and bookStatus!=''">
+			book_status,
+		</if>
+		<if test="bookWriter!=null and bookWriter!=''">
+			book_writer,
+		</if>
+		<if test="bookHouse!=null and bookHouse!=''">
+			book_house,
+		</if>
+	</trim>
+	VALUES
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="bookName!=null and bookName!=''">
+			#{bookName},
+		</if>
+		<if test="bookType!=null and bookType!=''">
+			#{bookType},
+		</if>
+			#{bookNumber},
+		<if test="bookStatus!=null and bookStatus!=''">
+			#{bookStatus},
+		</if>
+		<if test="bookWriter!=null and bookWriter!=''">
+			#{bookWriter},
+		</if>
+		<if test="bookHouse!=null and bookHouse!=''">
+			#{bookHouse},
+		</if>
+	</trim>
+	
+</insert>
+
+<delete id="informationDelete" parameterType="int">
+		DELETE
+		FROM
+			book
+		WHERE
+			id=#{id}
+</delete>
+
+<update id="informationUpdate" parameterType="com.framework.rbac.book.model.Book">
+		UPDATE
+		book
+		<set>
+		<if test="bookName!=null and bookName!=''">
+			book_name=#{bookName},
+		</if>
+		<if test="bookType!=null and bookType!=''">
+			book_type=#{bookType},
+		</if>
+			book_number=#{bookNumber},
+		<if test="bookStatus!=null and bookStatus!=''">
+			book_status=#{bookStatus},
+		</if>
+		<if test="bookWriter!=null and bookWriter!=''">
+			book_writer=#{bookWriter},
+		</if>
+		<if test="bookHouse!=null and bookHouse!=''">
+			book_house=#{bookHouse},
+		</if>
+		</set>
+		WHERE id=#{id}
+</update>
+
+
+</mapper>

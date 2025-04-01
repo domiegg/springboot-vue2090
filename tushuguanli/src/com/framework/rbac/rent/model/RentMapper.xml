@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.rbac.rent.dao.RentDao">
+	<resultMap type="com.framework.rbac.rent.model.Rent"
+		id="rentMap">
+		<id property="id" column="id" javaType="java.lang.Integer"
+			jdbcType="INTEGER" />
+		<result property="bookName" column="book_name" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="bookNumber" column="book_number" javaType="java.lang.Integer"
+			jdbcType="INTEGER" />
+		<result property="customName" column="custom_name" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<result property="rentTime" column="rent_time" javaType="java.lang.String"
+			jdbcType="DATE" />
+		<result property="returnTime" column="return_time" javaType="java.lang.String"
+			jdbcType="DATE" />
+		<result property="limitTime" column="limit_time" javaType="java.lang.String"
+			jdbcType="DATE" />
+		<result property="bookId" column="book_id" javaType="java.lang.Integer"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+<select id="Query" resultMap="rentMap" parameterType="java.util.HashMap">
+	SELECT
+		*
+	FROM
+		rent
+	<where>
+			return_time IS NOT NULL AND custom_name=#{customName}
+	</where>
+	LIMIT 
+	#{pager.offSet},#{pager.pageSize}
+</select>
+<select id="QueryNull" resultMap="rentMap" parameterType="java.util.HashMap">
+	SELECT
+		*
+	FROM
+		rent
+	<where>
+			return_time IS NULL AND custom_name=#{customName}
+	</where>
+	LIMIT 
+	#{pager.offSet},#{pager.pageSize}
+</select>
+<select id="QueryOne" resultMap="rentMap">
+	SELECT
+		*
+	FROM
+		rent
+	<where>
+		id=#{id}
+	</where>
+</select>
+<select id="queryCount" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+		rent
+</select>
+
+<insert id="rentAdd">
+
+	INSERT INTO
+		rent
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="bookName!=null and bookName!=''">
+			book_name,
+		</if>
+		<if test="bookNumber!=null and bookNumber!=''">
+			book_number,
+		</if>
+		<if test="customName!=null and customName!=''">
+			custom_name,
+		</if>
+		<if test="rentTime!=null and rentTime!=''">
+			rent_time,
+		</if>
+		<if test="returnTime!=null and returnTime!=''">
+			return_time,
+		</if>
+		<if test="limitTime!=null and limitTime!=''">
+			limit_time,
+		</if>
+		<if test="bookId!=null and bookId!=''">
+			book_id,
+		</if>
+	</trim>
+	VALUES
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+		<if test="bookName!=null and bookName!=''">
+			#{bookName},
+		</if>
+		<if test="bookNumber!=null and bookNumber!=''">
+			#{bookNumber},
+		</if>
+		<if test="customName!=null and customName!=''">
+			#{customName},
+		</if>
+		<if test="rentTime!=null and rentTime!=''">
+			#{rentTime},
+		</if>
+		<if test="returnTime!=null and returnTime!=''">
+			#{returnTime},
+		</if>
+		<if test="limitTime!=null and limitTime!=''">
+			#{limitTime},
+		</if>
+		<if test="bookId!=null and bookId!=''">
+			#{bookId},
+		</if>
+	</trim>
+	
+</insert>
+
+<delete id="informationDelete" parameterType="int">
+		DELETE
+		FROM
+			rent
+		WHERE
+			id=#{id}
+</delete>
+
+<update id="informationUpdate" parameterType="com.framework.rbac.rent.model.Rent">
+		UPDATE
+		rent
+		<set>
+		<if test="bookName!=null and bookName!=''">
+			book_name=#{bookName},
+		</if>
+		<if test="bookNumber!=null and bookNumber!=''">
+			book_number=#{bookNumber},
+		</if>
+		<if test="customName!=null and customName!=''">
+			custom_name=#{customName},
+		</if>
+		<if test="rentTime!=null and rentTime!=''">
+			rent_time=#{rentTime},
+		</if>
+		<if test="returnTime!=null and returnTime!=''">
+			return_time=#{returnTime},
+		</if>
+		<if test="limitTime!=null and limitTime!=''">
+			limit_time=#{limitTime},
+		</if>
+		<if test="bookId!=null and bookId!=''">
+			book_id=bookId,
+		</if>
+		</set>
+		WHERE id=#{id}
+</update>
+
+
+</mapper>
